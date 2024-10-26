@@ -1,5 +1,6 @@
 # CI de Nivel 01 - Disparo manual a partir de 1 clique
 
+#Nome que vai aparecer nas opções de pipe
 name: 'Execucao Manual'
 
 # triggers OU gatilhos de execucao. regras de disparo da execucao
@@ -20,7 +21,7 @@ jobs:
 
       # - uses: actions/setup-node@v4
       #   with:
-      #       node-version: lts/*
+      #       node-version: lts/* = última versão estável
 
       - name: Instalando Yarn
         run: npm install -g yarn
@@ -34,9 +35,12 @@ jobs:
       - name: Testes E2E (end-to-end)
         run: yarn run e2e
 
-      # passed, failed, cancelled
       - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() }} #expressão para passar se for diferente de cancelado
         with:
           name: relatorio-de-testes
-          path: ./playwright-report
+          path: ./playwright-report #caminho onde fica o relatório
+
+
+          #Expressão serve para independente de se acontecer algo ruim no passo anterior que
+          # o passo que tenha a expressão execute normalmente
